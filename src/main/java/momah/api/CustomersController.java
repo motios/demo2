@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -21,12 +22,19 @@ public class CustomersController {
         if(customerService.dataIsEmpty()){
             addStaticData();
         }
-        model.put("name", "moti");
-        return  new ModelAndView("index", model);
+
+        Customer cust = null;
+        for (Customer customer: customerService.getAll()){
+            //model.put(customer.getFirstName()+" " +customer.getLastname(), customer);
+            cust=customer;
+        }
+        model.put("name", "Moti");
+        return  new ModelAndView("customer", model);
     }
 
     private void addStaticData(){
         customerService.create(new Customer("test1@gmail.com","first1","last1",25));
-        customerService.create(new Customer("test2@gmail.com","first2","last2",26));
+        customerService.create(new Customer("test2@gmail.com","first2","last2",36));
+        customerService.create(new Customer("test3@gmail.com","first3","last3",47));
     }
 }
